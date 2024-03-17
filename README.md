@@ -1,0 +1,2 @@
+# core
+MascotApp Core
