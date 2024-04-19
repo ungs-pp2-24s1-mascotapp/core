@@ -6,7 +6,7 @@ import com.mascotapp.core.MascotApp;
 import com.mascotapp.core.factory.MascotAppFactory;
 
 public abstract class MascotAppInitializer {
-	public MascotApp initializeWithJarFiles(String path) throws FileNotFoundException {
+	public static MascotApp initializeWithJarFiles(String path) throws FileNotFoundException {
 		return new MascotAppFactory().create(path);
 	}
 }
