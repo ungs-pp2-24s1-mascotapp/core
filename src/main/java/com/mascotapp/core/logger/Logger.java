@@ -1,6 +1,9 @@
 package com.mascotapp.core.logger;
 
 public abstract class Logger {
+
+    private Logger() {}
+    
     private static OutputWriter outputWriter = new ConsoleOutputWriter(); // Por defecto, escribirá en la consola real
 
     public static void setErrorOutput(OutputWriter outputWriter) {

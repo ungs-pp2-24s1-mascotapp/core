@@ -9,14 +9,16 @@ import com.mascotapp.core.entities.Match;
 import com.mascotapp.core.entities.Post;
 
 public abstract class Matcher {
+
+    private Matcher() {}
 	
 	public static Set<Match> getMatchs(Set<Post> founds, Set<Post> losts) throws NullArgumentException {
 		if (founds == null || losts == null)
 			throw new NullArgumentException();
 		
-		Set<Match> matches = new HashSet<Match>();
+		Set<Match> matches = new HashSet<>();
 		
-		if (founds.size() == 0 || losts.size() == 0) 
+		if (founds.isEmpty() || losts.isEmpty()) 
 			return matches;
 		
 		for (Post found : founds) {

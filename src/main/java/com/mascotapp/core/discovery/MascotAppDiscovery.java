@@ -124,13 +124,22 @@ public class MascotAppDiscovery {
      * @return La clase cargada, o null si hay un error.
      */
     private Class<?> loadClassFromJar(File jarFile, String className) {
+        URLClassLoader classLoader = null;
         try {
-            URLClassLoader classLoader = URLClassLoader.newInstance(new URL[]{jarFile.toURI().toURL()});
+            classLoader = URLClassLoader.newInstance(new URL[]{jarFile.toURI().toURL()});
             String canonicalClassName = className.replace("/", ".").replace(CLASS_EXTENSION, "");
             return Class.forName(canonicalClassName, true, classLoader);
         } catch (IOException | ClassNotFoundException e) {
             Logger.error("Error loading class from jar: " + e.getMessage());
             return null;
+        } finally {
+            if (classLoader != null) {
+                try {
+                    classLoader.close();
+                } catch (IOException e) {
+                    Logger.error("Error closing loader: " + e.getMessage());
+                }
+            }
         }
     }
 }

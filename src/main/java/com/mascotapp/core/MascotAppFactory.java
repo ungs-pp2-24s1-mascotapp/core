@@ -1,11 +1,9 @@
-package com.mascotapp.core.factory;
+package com.mascotapp.core;
 
 import java.io.FileNotFoundException;
 import java.util.Set;
 
 import com.mascotapp.core.service.dataprovider.PetDataProvider;
-import com.mascotapp.core.MascotApp;
-import com.mascotapp.core.MascotAppCore;
 import com.mascotapp.core.discovery.MascotAppDiscovery;
 
 public class MascotAppFactory {

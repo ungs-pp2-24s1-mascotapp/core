@@ -1,22 +1,15 @@
-package com.mascotapp.core.factory;
+package com.mascotapp.core;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.FileNotFoundException;
-import java.util.HashSet;
-import java.util.Set;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import com.mascotapp.core.MascotApp;
-import com.mascotapp.core.MascotAppCore;
 import com.mascotapp.core.discovery.MascotAppDiscovery;
-import com.mascotapp.core.entities.Post;
-import com.mascotapp.core.service.dataprovider.PetDataProvider;
 
-public class MascotAppFactoryTest {
+class MascotAppFactoryTest {
 
     private MascotAppDiscovery discoverer;
     private MascotAppFactory factory;
@@ -29,7 +22,7 @@ public class MascotAppFactoryTest {
     }
 
     @Test
-    public void testCreateWithNonExistentPath() {
+    void testCreateWithNonExistentPath() {
         String nonExistentPath = "nonexistent/directory";
 
         try {

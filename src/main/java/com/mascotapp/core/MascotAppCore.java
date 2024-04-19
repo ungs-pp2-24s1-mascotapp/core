@@ -16,8 +16,8 @@ public class MascotAppCore {
     }
 
     public Set<Match> getMatches() {
-    	Set<Post> founds = new HashSet<Post>();
-    	Set<Post> losts = new HashSet<Post>();
+    	Set<Post> founds = new HashSet<>();
+    	Set<Post> losts = new HashSet<>();
     	
         for (PetDataProvider dataProvider : dataProviders) {
         	founds.addAll(dataProvider.getFoundPets());
