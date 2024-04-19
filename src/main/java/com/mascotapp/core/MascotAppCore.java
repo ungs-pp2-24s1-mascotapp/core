@@ -1,34 +1,28 @@
 package com.mascotapp.core;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
-import com.mascotapp.core.entities.Pet;
+import com.mascotapp.core.entities.Match;
 import com.mascotapp.core.entities.Post;
-import com.mascotapp.core.service.converter.PostConverter;
 import com.mascotapp.core.service.dataprovider.PetDataProvider;
-import com.mascotapp.core.service.keyword.KeywordSeparator;
-import com.mascotapp.core.service.searchengine.PetSearchEngine;
+import com.mascotapp.core.service.matcher.Matcher;
 
 public class MascotAppCore {
-	private List<PetDataProvider> dataProviders;
-    private PetSearchEngine searchEngine;
-    private KeywordSeparator keywordSeparator;
-    private PostConverter converter;
+	private Set<PetDataProvider> dataProviders;
     
-    public MascotAppCore(List<PetDataProvider> dataProviders, PetSearchEngine searchEngine, KeywordSeparator keywordSeparator, PostConverter converter) {
+    public MascotAppCore(Set<PetDataProvider> dataProviders) {
         this.dataProviders = dataProviders;
-        this.searchEngine = searchEngine;
-        this.keywordSeparator = keywordSeparator;
-        this.converter = converter;
     }
 
-    public List<Pet> searchPets(String query) {
-        List<Post> allData = new ArrayList<>();
+    public Set<Match> getMatches() {
+    	Set<Post> founds = new HashSet<Post>();
+    	Set<Post> losts = new HashSet<Post>();
+    	
         for (PetDataProvider dataProvider : dataProviders) {
-        	allData.addAll(dataProvider.fetchData());
+        	founds.addAll(dataProvider.getFoundPets());
+        	losts.addAll(dataProvider.getLostPets());
         }
-        String[] keywords = this.keywordSeparator.separateKeywords(query);
-        return searchEngine.searchPets(allData, keywords, converter);
+        return Matcher.getMatchs(founds, losts);
     }
 }

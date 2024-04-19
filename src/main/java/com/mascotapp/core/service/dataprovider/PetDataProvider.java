@@ -1,9 +1,10 @@
 package com.mascotapp.core.service.dataprovider;
 
-import java.util.List;
+import java.util.Set;
 
 import com.mascotapp.core.entities.Post;
 
 public interface PetDataProvider {
-	List<Post> fetchData();
+	Set<Post> getLostPets();
+	Set<Post> getFoundPets();
 }

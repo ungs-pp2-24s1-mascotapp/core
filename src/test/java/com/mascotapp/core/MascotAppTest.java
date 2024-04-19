@@ -1,16 +1,16 @@
 package com.mascotapp.core;
 
-import com.mascotapp.core.entities.Pet;
-import com.mascotapp.core.service.dataprovider.FacebookPetDataProvider;
+import com.mascotapp.core.entities.Match;
+import com.mascotapp.core.entities.Post;
+import com.mascotapp.core.service.dataprovider.MockPetDataProvider;
 import com.mascotapp.core.service.dataprovider.PetDataProvider;
-import com.mascotapp.core.service.searchengine.PetSearchEngine;
-import com.mascotapp.core.service.keyword.KeywordSeparator;
-import com.mascotapp.core.service.converter.SimplePostConverter;
-import com.mascotapp.core.service.keyword.SimpleKeywordSeparator;
-import com.mascotapp.core.service.searchengine.SimplePetSearchEngine;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import java.util.List;
+
+import java.util.HashSet;
+import java.util.Set;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class MascotAppTest {
@@ -19,13 +19,18 @@ public class MascotAppTest {
 
     @BeforeEach
     public void setUp() {
-        mascotApp = MascotAppFactory.createMascotApp();
+    	Set<PetDataProvider> dataProviders = new HashSet<PetDataProvider>();
+    	Set<Post> founds = new HashSet<>();
+    	Set<Post> losts = new HashSet<>();
+    	dataProviders.add(new MockPetDataProvider(founds,losts));
+    	MascotAppCore core = new MascotAppCore(dataProviders);
+        mascotApp = new MascotApp(core);
     }
 
     @Test
-    public void testSearch() {
+    public void testMatchs() {
         // Test
-        List<Pet> searchResults = mascotApp.search("query");
+        Set<Match> searchResults = mascotApp.getMatches();
         assertEquals(0, searchResults.size());
     }
 }

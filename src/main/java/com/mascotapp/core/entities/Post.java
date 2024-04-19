@@ -10,11 +10,12 @@ public class Post {
 		this.content = content;
 		this.url = url;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(content, url);
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -26,12 +27,16 @@ public class Post {
 		Post other = (Post) obj;
 		return Objects.equals(content, other.content) && Objects.equals(url, other.url);
 	}
+
 	public String getContent() {
 		return content;
 	}
+
 	public String getUrl() {
 		return url;
 	}
+	
+	
 	
 	
 }
