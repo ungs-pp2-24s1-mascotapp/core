@@ -33,3 +33,8 @@ jacocoTestReport {
         csv.required.set(true)
     }
 }
+
+compileJava {
+    options.compilerArgs << "-source" << "1.8"
+    options.compilerArgs << "-target" << "1.8"
+}
