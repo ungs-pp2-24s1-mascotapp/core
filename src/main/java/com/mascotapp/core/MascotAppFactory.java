@@ -9,7 +9,8 @@ import com.mascotapp.core.discovery.MascotAppDiscovery;
 public class MascotAppFactory {
 	
     public static MascotApp create(String path) throws FileNotFoundException {
-        Set<PetDataProvider> dataProviders = MascotAppDiscovery.discover(path);
+    	MascotAppDiscovery discovery = new MascotAppDiscovery();
+        Set<PetDataProvider> dataProviders = discovery.discover(path);
         MascotAppCore core = new MascotAppCore(dataProviders);
         return new MascotApp(core);
     }
