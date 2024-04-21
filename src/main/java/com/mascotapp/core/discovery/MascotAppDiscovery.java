@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.nio.file.Files;
 import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.Set;
@@ -28,7 +29,7 @@ public class MascotAppDiscovery {
      * @throws FileNotFoundException Si la ubicación especificada no existe.
      * @throws IllegalArgumentException Si la ubicación especificada no es válida.
      */
-    public Set<PetDataProvider> discover(String path) throws FileNotFoundException, IllegalArgumentException {
+    public static Set<PetDataProvider> discover(String path) throws FileNotFoundException, IllegalArgumentException {
         File directory = new File(path);
 
         if (!path.matches(DIRECTORY_REGEX)) {
@@ -39,40 +40,31 @@ public class MascotAppDiscovery {
             throw new FileNotFoundException("Location does not exist: " + path);
         }
 
-        return findClasses(path);
+        return findClasses(directory);
     }
     
     /**
-     * Busca las clases de proveedores de datos de mascotas en una ubicación específica.
+     * Busca las clases de proveedores de datos de mascotas dentro de una ubicación específica.
      * @param path La ruta donde se buscarán las clases.
      * @return Un conjunto de proveedores de datos de mascotas encontrados.
      */
-    private Set<PetDataProvider> findClasses(String path) {
-        Set<PetDataProvider> dataProviders = new HashSet<>();
-        findClassesInPath(new File(path), dataProviders);
-        return dataProviders;
-    }
-    
-    /**
-     * Busca las clases de proveedores de datos de mascotas en una ruta especificada.
-     * @param path La ruta donde se buscarán las clases.
-     * @param dataProviders Conjunto para almacenar los proveedores de datos encontrados.
-     */
-    private void findClassesInPath(File path, Set<PetDataProvider> dataProviders) {
-        if (!path.exists()) {
-            return;
-        }
-
-        if (path.isDirectory()) {
-            File[] files = path.listFiles();
-            if (files != null) {
-                for (File file : files) {
-                    findClassesInPath(file, dataProviders);
-                }
+    private static Set<PetDataProvider> findClasses(File directory) {
+    	Set<PetDataProvider> dataProviders = new HashSet<>();
+    	    
+        if (directory.isDirectory()) {
+            try {
+                Files.walk(directory.toPath())
+                     .filter(Files::isRegularFile)
+                     .filter(file -> file.toString().endsWith(JAR_EXTENSION))
+                     .forEach(file -> dataProviders.addAll(findDataProvidersInJar(file.toFile())));
+            } catch (IOException e) {
+            	Logger.error("Error walking directories: " + e.getMessage());
             }
-        } else if (path.isFile() && path.getName().endsWith(JAR_EXTENSION)) {
-        	dataProviders.addAll(findDataProvidersInJar(path));
+        } else if (directory.isFile() && directory.getName().endsWith(JAR_EXTENSION)) {
+            dataProviders.addAll(findDataProvidersInJar(directory));
         }
+        
+        return dataProviders;
     }
     
     /**
@@ -80,7 +72,7 @@ public class MascotAppDiscovery {
      * @param jarFile El archivo JAR en el que se buscarán los proveedores de datos.
      * @return Un conjunto de proveedores de datos de mascotas encontrados en el JAR.
      */
-    private Set<PetDataProvider> findDataProvidersInJar(File jarFile) {
+    private static Set<PetDataProvider> findDataProvidersInJar(File jarFile) {
         Set<PetDataProvider> dataProviders = new HashSet<>();
 
         try (JarFile jar = new JarFile(jarFile)) {
@@ -105,7 +97,7 @@ public class MascotAppDiscovery {
      * @param entry La entrada del archivo JAR que representa la clase.
      * @param dataProviders Conjunto para almacenar los proveedores de datos encontrados.
      */
-    private void instantiateClassFromJar(File jarFile, JarEntry entry, Set<PetDataProvider> dataProviders) {
+    private static void instantiateClassFromJar(File jarFile, JarEntry entry, Set<PetDataProvider> dataProviders) {
         Class<?> cls = loadClassFromJar(jarFile, entry.getName());
         if (cls != null && PetDataProvider.class.isAssignableFrom(cls)) {
         	try {
@@ -123,7 +115,7 @@ public class MascotAppDiscovery {
      * @param className El nombre de la clase a cargar.
      * @return La clase cargada, o null si hay un error.
      */
-    private Class<?> loadClassFromJar(File jarFile, String className) {
+    private static Class<?> loadClassFromJar(File jarFile, String className) {
         URLClassLoader classLoader = null;
         try {
             classLoader = URLClassLoader.newInstance(new URL[]{jarFile.toURI().toURL()});

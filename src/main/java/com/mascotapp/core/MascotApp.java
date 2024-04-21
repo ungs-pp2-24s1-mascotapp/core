@@ -15,7 +15,6 @@ public class MascotApp extends Observable {
     	this.core = core;
 	}
 
-	@SuppressWarnings("deprecation")
 	public Set<Match> getMatches() {
 		Set<Match> results = new HashSet<>();
     	results.addAll(this.core.getMatches());

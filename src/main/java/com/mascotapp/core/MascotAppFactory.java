@@ -8,14 +8,8 @@ import com.mascotapp.core.discovery.MascotAppDiscovery;
 
 public class MascotAppFactory {
 	
-	MascotAppDiscovery discoverer;
-
-    public MascotAppFactory() {
-        this.discoverer = new MascotAppDiscovery();
-    }
-
-    public MascotApp create(String path) throws FileNotFoundException {
-        Set<PetDataProvider> dataProviders = discoverer.discover(path);
+    public static MascotApp create(String path) throws FileNotFoundException {
+        Set<PetDataProvider> dataProviders = MascotAppDiscovery.discover(path);
         MascotAppCore core = new MascotAppCore(dataProviders);
         return new MascotApp(core);
     }
