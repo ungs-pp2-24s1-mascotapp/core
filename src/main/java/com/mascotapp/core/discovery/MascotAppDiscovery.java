@@ -29,7 +29,7 @@ public class MascotAppDiscovery {
      * @throws FileNotFoundException Si la ubicación especificada no existe.
      * @throws IllegalArgumentException Si la ubicación especificada no es válida.
      */
-    public Set<PetDataProvider> discover(String path) throws FileNotFoundException, IllegalArgumentException {
+    public static Set<PetDataProvider> discover(String path) throws FileNotFoundException, IllegalArgumentException {
         File directory = new File(path);
 
         if (!path.matches(DIRECTORY_REGEX)) {
@@ -48,7 +48,7 @@ public class MascotAppDiscovery {
      * @param path La ruta donde se buscarán las clases.
      * @return Un conjunto de proveedores de datos de mascotas encontrados.
      */
-    private Set<PetDataProvider> findClasses(File directory) {
+    private static Set<PetDataProvider> findClasses(File directory) {
     	Set<PetDataProvider> dataProviders = new HashSet<>();
     	    
         if (directory.isDirectory()) {
@@ -72,7 +72,7 @@ public class MascotAppDiscovery {
      * @param jarFile El archivo JAR en el que se buscarán los proveedores de datos.
      * @return Un conjunto de proveedores de datos de mascotas encontrados en el JAR.
      */
-    private Set<PetDataProvider> findDataProvidersInJar(File jarFile) {
+    private static Set<PetDataProvider> findDataProvidersInJar(File jarFile) {
         Set<PetDataProvider> dataProviders = new HashSet<>();
 
         try (JarFile jar = new JarFile(jarFile)) {
@@ -97,7 +97,7 @@ public class MascotAppDiscovery {
      * @param entry La entrada del archivo JAR que representa la clase.
      * @param dataProviders Conjunto para almacenar los proveedores de datos encontrados.
      */
-    private void instantiateClassFromJar(File jarFile, JarEntry entry, Set<PetDataProvider> dataProviders) {
+    private static void instantiateClassFromJar(File jarFile, JarEntry entry, Set<PetDataProvider> dataProviders) {
         Class<?> cls = loadClassFromJar(jarFile, entry.getName());
         if (cls != null && PetDataProvider.class.isAssignableFrom(cls)) {
         	try {
@@ -115,7 +115,7 @@ public class MascotAppDiscovery {
      * @param className El nombre de la clase a cargar.
      * @return La clase cargada, o null si hay un error.
      */
-    private Class<?> loadClassFromJar(File jarFile, String className) {
+    private static Class<?> loadClassFromJar(File jarFile, String className) {
         URLClassLoader classLoader = null;
         try {
             classLoader = URLClassLoader.newInstance(new URL[]{jarFile.toURI().toURL()});
