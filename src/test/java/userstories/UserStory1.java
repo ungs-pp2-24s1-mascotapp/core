@@ -16,7 +16,6 @@ import com.mascotapp.core.entities.Match;
 import com.mascotapp.core.entities.Post;
 import com.mascotapp.core.service.dataprovider.MockPetDataProvider;
 import com.mascotapp.core.service.dataprovider.PetDataProvider;
-import com.mascotapp.core.service.matcher.Matcher;
 
 public class UserStory1 {
 
