@@ -44,7 +44,7 @@ public class UserStory2 {
 
 	@Test
     public void CA5_discoverSingleSocialNetworkPath() throws FileNotFoundException, IllegalArgumentException {
-		String singleSocialNetworkPath = "src/test/resources/US2/singleSocialNetwork";
+		String singleSocialNetworkPath = "src/test/resources/US2/singleSocialNetwork/Facebook.jar";
         Set<PetDataProvider> dataProvidersDiscovery = MascotAppDiscovery.discover(singleSocialNetworkPath);
                   
         assertEquals(1, dataProvidersDiscovery.size());

@@ -35,8 +35,8 @@ public class MascotAppDiscovery {
             throw new FileNotFoundException("File location does not exist: " + path);
         }
 
-        if (!directory.isDirectory()) {
-            throw new IllegalArgumentException("Location is not a directory: " + path);
+        if (!directory.isDirectory() && !fileEndsWith(directory, JAR_EXTENSION)) {
+            throw new IllegalArgumentException("Location is not a valid directory: " + path);
         }
         
         return findClasses(directory);
@@ -132,5 +132,9 @@ public class MascotAppDiscovery {
                 }
             }
         }
+    }
+    
+    private static boolean fileEndsWith(File directory, String extension) {
+    	return directory.getName().endsWith(JAR_EXTENSION);
     }
 }
