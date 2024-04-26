@@ -51,10 +51,16 @@ public abstract class Matcher {
 		if (foundWords.length == 0 || lostWords.length == 0) return false;
 		
 		int minimumNumberWordMatches = 2;
-		
         int matchingWordsCount = 0;
+        
         for (String foundWord : foundWords) {
+        	if (!hasEnoughCharacters(foundWord))
+        		continue;
+        	
             for (String lostWord : lostWords) {
+            	if (!hasEnoughCharacters(lostWord))
+            		continue;
+            	
                 if (foundWord.equals(lostWord)) {
                     matchingWordsCount++;
                     if (matchingWordsCount >= minimumNumberWordMatches) {
@@ -65,5 +71,11 @@ public abstract class Matcher {
         }
         
         return false;
+	}
+	
+	private static boolean hasEnoughCharacters(String word) {
+		int minimumNumberCharacters = 3;
+		
+		return word.length() >= minimumNumberCharacters;
 	}
 }

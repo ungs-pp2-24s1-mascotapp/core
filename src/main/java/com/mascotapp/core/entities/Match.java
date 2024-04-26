@@ -33,5 +33,12 @@ public class Match {
 		return Objects.equals(foundPet, other.foundPet) && Objects.equals(lostPet, other.lostPet);
 	}
 	
+	@Override
+	public String toString() {
+		return "Match [foundPet=" + foundPet + ", lostPet=" + lostPet + "]";
+	}
+	
+	
+	
 	
 }
