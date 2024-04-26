@@ -35,6 +35,11 @@ public class Post {
 	public String getUrl() {
 		return url;
 	}
+
+	@Override
+	public String toString() {
+		return "Post [content=" + content + ", url=" + url + "]";
+	}
 	
 	
 	

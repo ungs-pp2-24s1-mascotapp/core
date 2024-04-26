@@ -17,8 +17,7 @@ import com.mascotapp.core.logger.Logger;
 import com.mascotapp.core.service.dataprovider.PetDataProvider;
 
 public class MascotAppDiscovery {
-	// Expresión regular para verificar la validez de una ruta de directorio
-	private static final String DIRECTORY_REGEX = "^[^\\s^\\x00-\\x1f\\\\?*:\"\";<>|/,][^\\x00-\\x1f\\\\?*:\"\";<>|/,]*[^,\\s^\\x00-\\x1f\\\\?*:\"\";<>|]+$";
+
 	private static final String CLASS_EXTENSION = ".class";
 	private static final String JAR_EXTENSION = ".jar";
 	
@@ -30,16 +29,16 @@ public class MascotAppDiscovery {
      * @throws IllegalArgumentException Si la ubicación especificada no es válida.
      */
     public static Set<PetDataProvider> discover(String path) throws FileNotFoundException, IllegalArgumentException {
-        File directory = new File(path);
-
-        if (!path.matches(DIRECTORY_REGEX)) {
-            throw new IllegalArgumentException("Invalid location: " + path);
-        }
+        File directory = new File(path);    
 
         if (!directory.exists()) {
-            throw new FileNotFoundException("Location does not exist: " + path);
+            throw new FileNotFoundException("File location does not exist: " + path);
         }
 
+        if (!directory.isDirectory() && !fileEndsWith(directory, JAR_EXTENSION)) {
+            throw new IllegalArgumentException("Location is not a valid directory: " + path);
+        }
+        
         return findClasses(directory);
     }
     
@@ -133,5 +132,9 @@ public class MascotAppDiscovery {
                 }
             }
         }
+    }
+    
+    private static boolean fileEndsWith(File directory, String extension) {
+    	return directory.getName().endsWith(JAR_EXTENSION);
     }
 }
