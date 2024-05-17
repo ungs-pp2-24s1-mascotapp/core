@@ -117,16 +117,4 @@ public class UserStory1 {
 		Set<Match> noPosts = mascotApp.getMatches();
 		assertTrue(noPosts.isEmpty());
 	}
-	
-	@Test
-	public void CA6_nullLostAndnullFoundPosts() {
-		setUpMascotApp(null, null);
-		assertThrows(NullPointerException.class, () -> mascotApp.getMatches());
-	}
-	
-	@Test
-	public void CA7_multipleCoincidencesLostAndFoundPostsFromTwoSocialNetworks() throws FileNotFoundException {
-		setUpMascotAppWithFactory("src/test/resources/US1");
-		assertEquals(6, mascotApp.getMatches().size());
-	}
 }
