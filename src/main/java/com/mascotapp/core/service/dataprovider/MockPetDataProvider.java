@@ -24,4 +24,9 @@ public class MockPetDataProvider implements PetDataProvider {
 		return foundPets;
 	}
 
+	@Override
+	public String getName() {
+		return "Mock";
+	}
+
 }
