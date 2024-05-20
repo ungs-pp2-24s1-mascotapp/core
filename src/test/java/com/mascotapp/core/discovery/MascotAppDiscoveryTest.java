@@ -2,7 +2,7 @@ package com.mascotapp.core.discovery;
 
 import org.junit.jupiter.api.Test;
 
-import com.mascotapp.core.service.dataprovider.PetDataProvider;
+import com.mascotapp.core.service.socialNetwork.SocialNetwork;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -46,7 +46,7 @@ public class MascotAppDiscoveryTest {
     @Test
     public void testDiscoverWithValidPathZeroImplementation() throws FileNotFoundException, IllegalArgumentException {
         String validPath = "src/test/resources/US2/ZeroImplementation";
-        Set<PetDataProvider> providers = MascotAppDiscovery.discover(validPath);
+        Set<SocialNetwork> providers = MascotAppDiscovery.discover(validPath);
         assertEquals(providers.size(), 0);
     }
 }

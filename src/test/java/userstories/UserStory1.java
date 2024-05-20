@@ -14,8 +14,8 @@ import com.mascotapp.core.MascotAppCore;
 import com.mascotapp.core.MascotAppFactory;
 import com.mascotapp.core.entities.Match;
 import com.mascotapp.core.entities.Post;
-import com.mascotapp.core.service.dataprovider.MockPetDataProvider;
-import com.mascotapp.core.service.dataprovider.PetDataProvider;
+import com.mascotapp.core.service.socialNetwork.MockSocialNetwork;
+import com.mascotapp.core.service.socialNetwork.SocialNetwork;
 
 public class UserStory1 {
 
@@ -63,10 +63,10 @@ public class UserStory1 {
 	}
 	
 	private void setUpMascotApp(Set<Post> foundPets, Set<Post> lostPets) {
-		PetDataProvider mockDataProvider = new MockPetDataProvider(foundPets, lostPets);
-        Set<PetDataProvider> providers = new HashSet<>();
-        providers.add(mockDataProvider);
-        mascotApp = new MascotApp(new MascotAppCore(providers));
+		SocialNetwork mockSocialNetwork = new MockSocialNetwork(foundPets, lostPets);
+        Set<SocialNetwork> socialNetworks = new HashSet<>();
+        socialNetworks.add(mockSocialNetwork);
+        mascotApp = new MascotApp(new MascotAppCore(socialNetworks));
 	}
 	
 	private void setUpMascotAppWithFactory(String path) throws FileNotFoundException {

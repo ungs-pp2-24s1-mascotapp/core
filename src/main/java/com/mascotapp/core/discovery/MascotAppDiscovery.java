@@ -14,7 +14,7 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
 import com.mascotapp.core.logger.Logger;
-import com.mascotapp.core.service.dataprovider.PetDataProvider;
+import com.mascotapp.core.service.socialNetwork.SocialNetwork;
 
 public class MascotAppDiscovery {
 
@@ -22,13 +22,13 @@ public class MascotAppDiscovery {
 	private static final String JAR_EXTENSION = ".jar";
 	
 	/**
-     * Descubre los proveedores de datos de mascotas en una ubicación específica.
-     * @param path La ruta donde se buscarán los proveedores de datos.
-     * @return Un conjunto de proveedores de datos de mascotas.
+     * Descubre las redes sociales en una ubicación específica.
+     * @param path La ruta donde se buscarán las redes sociales.
+     * @return Un conjunto de redes sociales.
      * @throws FileNotFoundException Si la ubicación especificada no existe.
      * @throws IllegalArgumentException Si la ubicación especificada no es válida.
      */
-    public static Set<PetDataProvider> discover(String path) throws FileNotFoundException, IllegalArgumentException {
+    public static Set<SocialNetwork> discover(String path) throws FileNotFoundException, IllegalArgumentException {
         File directory = new File(path);    
 
         if (!directory.exists()) {
@@ -47,32 +47,32 @@ public class MascotAppDiscovery {
      * @param path La ruta donde se buscarán las clases.
      * @return Un conjunto de proveedores de datos de mascotas encontrados.
      */
-    private static Set<PetDataProvider> findClasses(File directory) {
-    	Set<PetDataProvider> dataProviders = new HashSet<>();
+    private static Set<SocialNetwork> findClasses(File directory) {
+    	Set<SocialNetwork> socialNets = new HashSet<>();
     	    
         if (directory.isDirectory()) {
             try {
                 Files.walk(directory.toPath())
                      .filter(Files::isRegularFile)
                      .filter(file -> file.toString().endsWith(JAR_EXTENSION))
-                     .forEach(file -> dataProviders.addAll(findDataProvidersInJar(file.toFile())));
+                     .forEach(file -> socialNets.addAll(findSocialNetsInJar(file.toFile())));
             } catch (IOException e) {
             	Logger.error("Error walking directories: " + e.getMessage());
             }
         } else if (directory.isFile() && directory.getName().endsWith(JAR_EXTENSION)) {
-            dataProviders.addAll(findDataProvidersInJar(directory));
+        	socialNets.addAll(findSocialNetsInJar(directory));
         }
         
-        return dataProviders;
+        return socialNets;
     }
     
     /**
-     * Busca proveedores de datos de mascotas dentro de un archivo JAR.
-     * @param jarFile El archivo JAR en el que se buscarán los proveedores de datos.
-     * @return Un conjunto de proveedores de datos de mascotas encontrados en el JAR.
+     * Busca redes sociales dentro de un archivo JAR.
+     * @param jarFile El archivo JAR en el que se buscarán las redes sociales.
+     * @return Un conjunto de redes sociales encontrados en el JAR.
      */
-    private static Set<PetDataProvider> findDataProvidersInJar(File jarFile) {
-        Set<PetDataProvider> dataProviders = new HashSet<>();
+    private static Set<SocialNetwork> findSocialNetsInJar(File jarFile) {
+        Set<SocialNetwork> socialNets = new HashSet<>();
 
         try (JarFile jar = new JarFile(jarFile)) {
             Enumeration<JarEntry> entries = jar.entries();
@@ -80,27 +80,27 @@ public class MascotAppDiscovery {
             while (entries.hasMoreElements()) {
                 JarEntry entry = entries.nextElement();
                 if (!entry.isDirectory() && entry.getName().endsWith(CLASS_EXTENSION)) {
-                    instantiateClassFromJar(jarFile, entry, dataProviders);
+                    instantiateClassFromJar(jarFile, entry, socialNets);
                 }
             }
         } catch (IOException e) {
             Logger.error("Error reading jar file: " + e.getMessage());
         }
 
-        return dataProviders;
+        return socialNets;
     }
     
     /**
-     * Instancia una clase de proveedor de datos de mascotas desde un archivo JAR.
+     * Instancia una clase de red social desde un archivo JAR.
      * @param jarFile El archivo JAR que contiene la clase.
      * @param entry La entrada del archivo JAR que representa la clase.
-     * @param dataProviders Conjunto para almacenar los proveedores de datos encontrados.
+     * @param socialNets Conjunto para almacenar las redes sociales encontradas.
      */
-    private static void instantiateClassFromJar(File jarFile, JarEntry entry, Set<PetDataProvider> dataProviders) {
+    private static void instantiateClassFromJar(File jarFile, JarEntry entry, Set<SocialNetwork> socialNets) {
         Class<?> cls = loadClassFromJar(jarFile, entry.getName());
-        if (cls != null && PetDataProvider.class.isAssignableFrom(cls)) {
+        if (cls != null && SocialNetwork.class.isAssignableFrom(cls)) {
         	try {
-				dataProviders.add((PetDataProvider) cls.getDeclaredConstructor().newInstance());
+        		socialNets.add((SocialNetwork) cls.getDeclaredConstructor().newInstance());
 			} catch (InstantiationException | IllegalAccessException | IllegalArgumentException
 					| InvocationTargetException | NoSuchMethodException | SecurityException e) {
 				Logger.error("Error instantiating class: " + e.getMessage());
