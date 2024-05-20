@@ -74,7 +74,7 @@ public class UserStory1 {
 	}
 
 	@Test
-	public void CA1_noCoincidencesLostAndFoundPosts() {
+	public void CA1_Sin_coincidencias() {
         Set<Post> founds = new HashSet<>();
 		Post foundPost = new Post("encontré un pastor alemán", "https://www.facebook.com/posts/121247009");
 		founds.add(foundPost);        
@@ -84,7 +84,7 @@ public class UserStory1 {
 	}
 	
 	@Test
-	public void CA2_singleCoincidenceLostAndFoundPosts() {
+	public void CA2_Una_coincidencia() {
 		Post lostPost = new Post("perdi mi perro labrador", "https://www.facebook.com/posts/1654397464");
 		Post foundPost = new Post("vi un perro de raza labrador en Perón y Paunero", "https://www.facebook.com/posts/142402269");
 		Set<Post> founds = new HashSet<>();
@@ -100,21 +100,19 @@ public class UserStory1 {
 	}
 		
 	@Test
-	public void CA3_multipleCoincidencesLostAndFoundPosts() {   			
+	public void CA3_Multiples_coincidencias() {   			
 		assertEquals(4, mascotApp.getMatches().size());
 	}
 	
 	@Test
-	public void CA4_noFoundPosts() {   
+	public void CA4_Sin_publicaciones_de_encontrados() {   
 		setUpMascotApp(noFoundsPosts, lostsPosts);
-		Set<Match> noFoundPosts = mascotApp.getMatches();
-		assertTrue(noFoundPosts.isEmpty());
+		assertTrue(mascotApp.getMatches().isEmpty());
 	}
 	
 	@Test
-	public void CA5_noLostAndFoundPosts() {
+	public void CA5_Sin_publicaciones_de_encontrados_y_perdidos() {
 		setUpMascotApp(noFoundsPosts, noLostsPosts);
-		Set<Match> noPosts = mascotApp.getMatches();
-		assertTrue(noPosts.isEmpty());
+		assertTrue(mascotApp.getMatches().isEmpty());
 	}
 }
