@@ -34,15 +34,6 @@ public class MascotAppDiscoveryTest {
         }
     }
     
-    /*
-    @Test
-    public void testDiscoverWithValidPathOneImplementation() throws FileNotFoundException, IllegalArgumentException {
-        String validPath = "src/test/resources/US2/OneImplementation";
-        Set<PetDataProvider> providers = MascotAppDiscovery.discover(validPath);
-        assertEquals(providers.size(), 1);
-    }
-    */
-    
     @Test
     public void testDiscoverWithValidPathZeroImplementation() throws FileNotFoundException, IllegalArgumentException {
         String validPath = "src/test/resources/US2/ZeroImplementation";

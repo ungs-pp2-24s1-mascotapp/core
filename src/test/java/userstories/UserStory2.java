@@ -42,7 +42,6 @@ public class UserStory2 {
         assertTrue(socialNetworksDiscovery.isEmpty());
     }
 	
-	/*
 	@Test
     public void CA5_unica_red_social() throws FileNotFoundException, IllegalArgumentException {
 		String singleSocialNetworkPath = "src/test/resources/US2/singleSocialNetwork/Facebook.jar";
@@ -51,7 +50,7 @@ public class UserStory2 {
         assertEquals(1, socialNetworksDiscovery.size());
         
         for (SocialNetwork elemento : socialNetworksDiscovery) {
-        	assertTrue(elemento.getClass().getSimpleName().equals("Facebook"));
+        	assertTrue(elemento.getName().equals("Facebook"));
         }        	
     }
 
@@ -63,9 +62,9 @@ public class UserStory2 {
         assertEquals(2, socialNetworksDiscovery.size());
                 
         for (SocialNetwork elemento : socialNetworksDiscovery) {
-        	assertTrue(elemento.getClass().getSimpleName().equals("Facebook") ||
-        			   elemento.getClass().getSimpleName().equals("Instagram")); 
+        	assertTrue(elemento.getName().equals("Facebook") ||
+        			elemento.getName().equals("Instagram")); 
         }   	
     }
-    */
+	
 }
