@@ -14,6 +14,7 @@ import com.mascotapp.core.MascotAppCore;
 import com.mascotapp.core.MascotAppFactory;
 import com.mascotapp.core.entities.Match;
 import com.mascotapp.core.entities.Post;
+import com.mascotapp.core.service.matcher.SimpleMatcher;
 import com.mascotapp.core.service.socialNetwork.MockSocialNetwork;
 import com.mascotapp.core.service.socialNetwork.SocialNetwork;
 
@@ -66,7 +67,7 @@ public class UserStory1 {
 		SocialNetwork mockSocialNetwork = new MockSocialNetwork(foundPets, lostPets);
         Set<SocialNetwork> socialNetworks = new HashSet<>();
         socialNetworks.add(mockSocialNetwork);
-        mascotApp = new MascotApp(new MascotAppCore(socialNetworks));
+        mascotApp = new MascotApp(new MascotAppCore(socialNetworks, new SimpleMatcher()));
 	}
 	
 	private void setUpMascotAppWithFactory(String path) throws FileNotFoundException {
@@ -101,7 +102,7 @@ public class UserStory1 {
 		
 	@Test
 	public void CA3_Multiples_coincidencias() {   			
-		assertEquals(4, mascotApp.getMatches().size());
+		assertEquals(2, mascotApp.getMatches().size());
 	}
 	
 	@Test

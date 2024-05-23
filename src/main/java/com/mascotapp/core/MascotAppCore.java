@@ -10,9 +10,11 @@ import com.mascotapp.core.service.socialNetwork.SocialNetwork;
 
 public class MascotAppCore {
 	private Set<SocialNetwork> socialNetworks;
+	private Matcher matcher;
     
-    public MascotAppCore(Set<SocialNetwork> socialNetworks) {
+    public MascotAppCore(Set<SocialNetwork> socialNetworks, Matcher matcher) {
         this.socialNetworks = socialNetworks;
+        this.matcher = matcher;
     }
 
     public Set<Match> getMatches() {
@@ -23,6 +25,6 @@ public class MascotAppCore {
         	founds.addAll(socialNetwork.getFoundPets());
         	losts.addAll(socialNetwork.getLostPets());
         }
-        return Matcher.getMatchs(founds, losts);
+        return matcher.getMatchs(founds, losts);
     }
 }

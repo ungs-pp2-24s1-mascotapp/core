@@ -21,19 +21,22 @@ public class MatcherTest {
         Set<Post> losts = new HashSet<>();
         
         // Crear algunos posts para pruebas
-        Post foundPost1 = new Post("Found post 1 content", "www.post.com");
+        Post foundPost1 = new Post("Found perro labrador 1 content", "www.post.com");
         Post foundPost2 = new Post("Found post 2 content", "www.post.com");
-        Post lostPost1 = new Post("Lost post 1 content", "www.post.com");
+        Post lostPost1 = new Post("Lost perro labrador 1 content", "www.post.com");
+        Post lostPost2 = new Post("Lost post 2 content", "www.post.com");
         
         // Agregar los posts a los sets correspondientes
         founds.add(foundPost1);
         founds.add(foundPost2);
         losts.add(lostPost1);
+        losts.add(lostPost2);
         
         try {
-            Set<Match> matches = Matcher.getMatchs(founds, losts);
+        	Matcher matcher = new SimpleMatcher();
+            Set<Match> matches = matcher.getMatchs(founds, losts);
             assertNotNull(matches);
-            assertEquals(2, matches.size()); // No debería haber coincidencias
+            assertEquals(1, matches.size());
         } catch (NullArgumentException e) {
             fail("Se lanzó una excepción inesperada: " + e.getMessage());
         }
