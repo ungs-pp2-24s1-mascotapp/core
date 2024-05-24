@@ -23,7 +23,7 @@ public class MascotAppTest {
     	Set<SocialNetwork> socialNetworks = new HashSet<SocialNetwork>();
     	Set<Post> founds = new HashSet<>();
     	Set<Post> losts = new HashSet<>();
-    	socialNetworks.add(new MockSocialNetwork(founds,losts));
+    	socialNetworks.add(new MockSocialNetwork(founds,losts, "Mock"));
     	MascotAppCore core = new MascotAppCore(socialNetworks, new SimpleMatcher());
         mascotApp = new MascotApp(core);
     }

@@ -64,14 +64,10 @@ public class UserStory1 {
 	}
 	
 	private void setUpMascotApp(Set<Post> foundPets, Set<Post> lostPets) {
-		SocialNetwork mockSocialNetwork = new MockSocialNetwork(foundPets, lostPets);
+		SocialNetwork mockSocialNetwork = new MockSocialNetwork(foundPets, lostPets, "Mock");
         Set<SocialNetwork> socialNetworks = new HashSet<>();
         socialNetworks.add(mockSocialNetwork);
         mascotApp = new MascotApp(new MascotAppCore(socialNetworks, new SimpleMatcher()));
-	}
-	
-	private void setUpMascotAppWithFactory(String path) throws FileNotFoundException {
-		mascotApp =  MascotAppFactory.create(path);
 	}
 
 	@Test

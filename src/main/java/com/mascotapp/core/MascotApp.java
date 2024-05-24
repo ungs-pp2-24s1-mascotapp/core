@@ -5,6 +5,7 @@ import java.util.Observable;
 import java.util.Set;
 
 import com.mascotapp.core.entities.Match;
+import com.mascotapp.core.service.socialNetwork.SocialNetworkInfo;
 
 @SuppressWarnings("deprecation")
 public class MascotApp extends Observable {
@@ -24,4 +25,16 @@ public class MascotApp extends Observable {
         
         return results;
     }
+	
+	public Set<SocialNetworkInfo> getSocialNetworks() {
+    	return this.core.getSocialNetworks();
+    }
+	
+	public void activateSocialNetwork(String name) {
+		this.core.activateSocialNetwork(name);
+	}
+	
+	public void deactivateSocialNetwork(String name) {
+		this.core.deactivateSocialNetwork(name);
+	}
 }
