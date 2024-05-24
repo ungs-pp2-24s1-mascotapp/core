@@ -35,6 +35,31 @@ public class UserStory3 {
         mascotApp = new MascotApp(new MascotAppCore(socialNetworks, new SimpleMatcher()));
 	}
 	
+	private void checkHasTwoSocialNetworks() {
+		int activeSocialNetworks = 0;
+		Set<SocialNetworkInfo> socialNetworks = this.mascotApp.getSocialNetworks();
+		for (SocialNetworkInfo socialNetworkInfo : socialNetworks) {
+			if(socialNetworkInfo.isActive()) {
+				assertTrue(socialNetworkInfo.getName().equals("Facebook") || 
+						socialNetworkInfo.getName().equals("Instagram"));
+				activeSocialNetworks++;
+			}
+		}
+		assertEquals(2, activeSocialNetworks);
+	}
+	
+	private void checkHasOneSocialNetwork() {
+		int activeSocialNetworks = 0;
+		Set<SocialNetworkInfo> socialNetworks = this.mascotApp.getSocialNetworks();
+		for (SocialNetworkInfo socialNetworkInfo : socialNetworks) {
+			if(socialNetworkInfo.isActive()) {
+				assertEquals("Facebook", socialNetworkInfo.getName());
+				activeSocialNetworks++;
+			}
+		}
+		assertEquals(1, activeSocialNetworks);
+	}
+	
 	@Test
 	public void CA_1_Ninguna_Red_Social_Activa() {
 		this.mascotApp.deactivateSocialNetwork("Facebook");
@@ -48,33 +73,25 @@ public class UserStory3 {
 	@Test
 	public void CA_2_Una_Red_Social_Activa() {
 		this.mascotApp.deactivateSocialNetwork("Instagram");
-		int activeSocialNetworks = 0;
-		Set<SocialNetworkInfo> socialNetworks = this.mascotApp.getSocialNetworks();
-		for (SocialNetworkInfo socialNetworkInfo : socialNetworks) {
-			if(socialNetworkInfo.isActive()) {
-				assertEquals("Facebook", socialNetworkInfo.getName());
-				activeSocialNetworks++;
-			}
-		}
-		assertEquals(1, activeSocialNetworks);
+		this.checkHasOneSocialNetwork();
 	}
 	
 	@Test
 	public void CA_3_Multiples_Redes_Sociales_Activas() {
-		int activeSocialNetworks = 0;
-		Set<SocialNetworkInfo> socialNetworks = this.mascotApp.getSocialNetworks();
-		for (SocialNetworkInfo socialNetworkInfo : socialNetworks) {
-			if(socialNetworkInfo.isActive()) {
-				assertTrue(socialNetworkInfo.getName().equals("Facebook") || 
-						socialNetworkInfo.getName().equals("Instagram"));
-				activeSocialNetworks++;
-			}
-		}
-		assertEquals(2, activeSocialNetworks);
+		checkHasTwoSocialNetworks();
 	}
 	
 	@Test
 	public void CA_4_Red_Social_Invalida() throws IllegalArgumentException {
 		assertThrows(IllegalArgumentException.class, () -> this.mascotApp.activateSocialNetwork("Twitter")); 
+	}
+	
+	@Test
+	public void CA_5_Reactivar_Red_Social() {
+		checkHasTwoSocialNetworks();
+		this.mascotApp.deactivateSocialNetwork("Instagram");
+		checkHasOneSocialNetwork();
+		this.mascotApp.activateSocialNetwork("Instagram");
+		checkHasTwoSocialNetworks();
 	}
 }

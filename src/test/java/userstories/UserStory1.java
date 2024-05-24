@@ -2,7 +2,6 @@ package userstories;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.io.FileNotFoundException;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -11,7 +10,6 @@ import org.junit.jupiter.api.Test;
 
 import com.mascotapp.core.MascotApp;
 import com.mascotapp.core.MascotAppCore;
-import com.mascotapp.core.MascotAppFactory;
 import com.mascotapp.core.entities.Match;
 import com.mascotapp.core.entities.Post;
 import com.mascotapp.core.service.matcher.SimpleMatcher;

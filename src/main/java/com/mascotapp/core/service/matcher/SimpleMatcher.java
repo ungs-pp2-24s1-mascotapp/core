@@ -31,6 +31,8 @@ public class SimpleMatcher implements Matcher {
 		keywords.add("gatito");
 		keywords.add("gatita");
 		keywords.add("siames");
+		keywords.add("golden");
+		keywords.add("retriever");
 	}
 	
 	public SimpleMatcher(Set<String> keywords) {

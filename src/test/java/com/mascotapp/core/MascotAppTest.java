@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -32,5 +33,19 @@ public class MascotAppTest {
     public void testMatchs() {
         Set<Match> searchResults = mascotApp.getMatches();
         assertEquals(0, searchResults.size());
+    }
+    
+    @Test
+    public void testStartService() throws InterruptedException {
+        mascotApp.startService();
+        mascotApp.stopService();
+        mascotApp.startService(0, 10, TimeUnit.MILLISECONDS);
+        Thread.sleep(20);
+        mascotApp.stopService();
+    }
+
+    @Test
+    public void testStopService() {
+        mascotApp.stopService();
     }
 }
