@@ -8,10 +8,12 @@ public class MockSocialNetwork implements SocialNetwork {
 	
 	private Set<Post> foundPets;
 	private Set<Post> lostPets;
+	private String name;
 	
-	public MockSocialNetwork(Set<Post> foundPets, Set<Post> lostPets) {
+	public MockSocialNetwork(Set<Post> foundPets, Set<Post> lostPets, String name) {
 		this.foundPets = foundPets;
 		this.lostPets = lostPets;
+		this.name = name;
 	}
 
 	@Override
@@ -26,7 +28,7 @@ public class MockSocialNetwork implements SocialNetwork {
 
 	@Override
 	public String getName() {
-		return "Mock";
+		return name;
 	}
 
 }
