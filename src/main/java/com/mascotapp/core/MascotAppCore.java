@@ -27,6 +27,7 @@ public class MascotAppCore {
         	founds.addAll(socialNetwork.getFoundPets());
         	losts.addAll(socialNetwork.getLostPets());
         }
+        
         return matcher.getMatchs(founds, losts);
     }
     
