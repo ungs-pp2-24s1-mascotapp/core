@@ -18,6 +18,12 @@ public class MascotApp extends Observable {
 	private final Runnable fetchMatches;
 	private ScheduledExecutorService scheduler;
     private ScheduledFuture<?> scheduledFuture;
+    private final long defaultInitialDelay = 0;
+    private final long defaultPeriod = 5;
+    private final TimeUnit defaultTimeUnit = TimeUnit.SECONDS;
+    
+    private long period = defaultPeriod;
+    private TimeUnit timeUnit = defaultTimeUnit;
 
     public MascotApp(MascotAppCore core) {
     	this.core = core;
@@ -56,23 +62,45 @@ public class MascotApp extends Observable {
 		this.core.deactivateSocialNetwork(name);
 	}
 	
-	public synchronized void startScheduledTask() {
-        if (scheduledFuture == null || scheduledFuture.isCancelled()) {
-            scheduledFuture = scheduler.scheduleAtFixedRate(fetchMatches, 0, 5, TimeUnit.SECONDS);
+	public synchronized void startService() {
+        if (canStart()) {
+        	this.period = defaultPeriod;
+        	this.timeUnit = defaultTimeUnit;
+        	schedule(defaultInitialDelay, period, timeUnit);
         }
     }
+	
+	public synchronized void startService(long initialDelay, long period, TimeUnit timeUnit) {
+		if (canStart()) {
+			this.period = period;
+			this.timeUnit = timeUnit;
+			schedule(initialDelay, period, timeUnit);
+		}
+	}
 
-    public synchronized void stopScheduledTask() {
-        if (scheduledFuture != null && !scheduledFuture.isCancelled()) {
+    public synchronized void stopService() {
+        if (canStop()) {
             scheduledFuture.cancel(true);
         }
     }
     
+    private void schedule(long initialDelay, long period, TimeUnit timeUnit) {
+    	scheduledFuture = scheduler.scheduleAtFixedRate(fetchMatches, initialDelay, period, timeUnit);
+    }
+    
+    private boolean canStart() {
+    	return scheduledFuture == null || scheduledFuture.isCancelled();
+    }
+    
+    private boolean canStop() {
+    	return scheduledFuture != null && !scheduledFuture.isCancelled();
+    }
+    
     public void shutdown() {
-        stopScheduledTask();
+        stopService();
         scheduler.shutdown();
         try {
-            if (!scheduler.awaitTermination(5, TimeUnit.SECONDS)) {
+            if (!scheduler.awaitTermination(period, timeUnit)) {
                 scheduler.shutdownNow();
             }
         } catch (InterruptedException e) {
