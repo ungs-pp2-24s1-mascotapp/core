@@ -36,7 +36,7 @@ public class UserStory3 {
 	}
 	
 	@Test
-	public void CA_1_Ninguna_Red_Activa() {
+	public void CA_1_Ninguna_Red_Social_Activa() {
 		this.mascotApp.deactivateSocialNetwork("Facebook");
 		this.mascotApp.deactivateSocialNetwork("Instagram");
 		Set<SocialNetworkInfo> socialNetworks = this.mascotApp.getSocialNetworks();
@@ -46,7 +46,7 @@ public class UserStory3 {
 	}
 	
 	@Test
-	public void CA_2_Una_Red_Activa() {
+	public void CA_2_Una_Red_Social_Activa() {
 		this.mascotApp.deactivateSocialNetwork("Instagram");
 		int activeSocialNetworks = 0;
 		Set<SocialNetworkInfo> socialNetworks = this.mascotApp.getSocialNetworks();
@@ -60,7 +60,7 @@ public class UserStory3 {
 	}
 	
 	@Test
-	public void CA_3_Multiples_Redes_Activas() {
+	public void CA_3_Multiples_Redes_Sociales_Activas() {
 		int activeSocialNetworks = 0;
 		Set<SocialNetworkInfo> socialNetworks = this.mascotApp.getSocialNetworks();
 		for (SocialNetworkInfo socialNetworkInfo : socialNetworks) {
