@@ -7,7 +7,6 @@ import org.apache.commons.math3.exception.NullArgumentException;
 import com.mascotapp.core.entities.Match;
 import com.mascotapp.core.entities.Post;
 
-public interface Matcher {
-	
-	Set<Match> getMatchs(Set<Post> founds, Set<Post> losts) throws NullArgumentException;
+public interface Matcher<T> {
+    boolean isMatch(T obj1, T obj2) throws NullArgumentException;
 }

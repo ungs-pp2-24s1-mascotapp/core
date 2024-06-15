@@ -67,4 +67,13 @@ public class SocialNetworkSelector {
 	private boolean isSocialNetworkActive(SocialNetwork socialNetwork) {
         return this.socialNetworkStates.getOrDefault(socialNetwork, false);
     }
+	
+	public boolean isSocialNetworkActive(String name) {
+		for (SocialNetwork socialNetwork : this.getActiveSocialNetworks()) {
+			if(socialNetwork.getName().equals(name)) {
+				return true;
+			}
+		}
+		return false;
+	}
 }

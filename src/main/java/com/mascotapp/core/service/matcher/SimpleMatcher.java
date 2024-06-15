@@ -8,7 +8,7 @@ import org.apache.commons.math3.exception.NullArgumentException;
 import com.mascotapp.core.entities.Match;
 import com.mascotapp.core.entities.Post;
 
-public class SimpleMatcher implements Matcher {
+public class SimpleMatcher implements PostMatcher {
 	
 	private Set<String> keywords;
 	private int minimumNumberWordMatches = 2;
@@ -60,7 +60,7 @@ public class SimpleMatcher implements Matcher {
 		return matches;
 	}
 	
-	private boolean isMatch(Post found, Post lost) throws NullArgumentException {
+	public boolean isMatch(Post found, Post lost) throws NullArgumentException {
 		if (found == null || lost == null)
 			throw new NullArgumentException();
 		
@@ -73,7 +73,7 @@ public class SimpleMatcher implements Matcher {
 	private String[] getKeywords(Post post) {
 		String content = post.getContent().toLowerCase();
 		if(!containsAny(content, keywords)) return null;
-		return post.getContent().toLowerCase().split("\\s+");
+		return content.split("\\s+");
 	}
 	
 	private boolean isMatchingWords(String[] foundWords, String[] lostWords) {

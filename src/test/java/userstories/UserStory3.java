@@ -12,6 +12,8 @@ import org.junit.jupiter.api.Test;
 
 import com.mascotapp.core.MascotApp;
 import com.mascotapp.core.MascotAppCore;
+import com.mascotapp.core.filter.ContentPostFilter;
+import com.mascotapp.core.service.matcher.ContentPostMatcher;
 import com.mascotapp.core.service.matcher.SimpleMatcher;
 import com.mascotapp.core.service.socialNetwork.MockSocialNetwork;
 import com.mascotapp.core.service.socialNetwork.SocialNetwork;
@@ -27,12 +29,19 @@ public class UserStory3 {
 	}
 	
 	private void setUpMascotApp() {
-		SocialNetwork mockSocialNetworkFacebook = new MockSocialNetwork(null, null, "Facebook");
-		SocialNetwork mockSocialNetworkInstagram = new MockSocialNetwork(null, null, "Instagram");
+		SocialNetwork mockSocialNetworkFacebook = new MockSocialNetwork(null, "Facebook");
+		SocialNetwork mockSocialNetworkInstagram = new MockSocialNetwork(null, "Instagram");
         Set<SocialNetwork> socialNetworks = new HashSet<>();
         socialNetworks.add(mockSocialNetworkFacebook);
         socialNetworks.add(mockSocialNetworkInstagram);
-        mascotApp = new MascotApp(new MascotAppCore(socialNetworks, new SimpleMatcher()));
+        MascotAppCore core = new MascotAppCore(
+            	socialNetworks, 
+            	new ContentPostMatcher(), 
+            	new ContentPostFilter(), 
+            	new ContentPostFilter(),
+            	new ContentPostFilter()
+            );
+        mascotApp = new MascotApp(core);
 	}
 	
 	private void checkHasTwoSocialNetworks() {

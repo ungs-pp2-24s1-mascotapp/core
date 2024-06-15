@@ -13,6 +13,8 @@ import com.mascotapp.core.MascotApp;
 import com.mascotapp.core.MascotAppCore;
 import com.mascotapp.core.entities.Match;
 import com.mascotapp.core.entities.Post;
+import com.mascotapp.core.filter.ContentPostFilter;
+import com.mascotapp.core.service.matcher.ContentPostMatcher;
 import com.mascotapp.core.service.matcher.SimpleMatcher;
 import com.mascotapp.core.service.socialNetwork.MockSocialNetwork;
 import com.mascotapp.core.service.socialNetwork.SocialNetwork;
@@ -22,8 +24,7 @@ import java.util.Observer;
 public class UserStory4 {
 	
 	private MascotApp mascotApp;
-	private Set<Post> foundPosts;
-	private Set<Post> lostsPosts;
+	private Set<Post> posts;
 	private DummyObserver dummyObserver;
 	
 	// Implementación dummy de Observer
@@ -51,12 +52,18 @@ public class UserStory4 {
 	}
 	
 	private void setUpMascotApp() {
-		foundPosts = new HashSet<>();
-		lostsPosts = new HashSet<>();
-		SocialNetwork mockSocialNetworkFacebook = new MockSocialNetwork(foundPosts, lostsPosts, "Facebook");
+		posts = new HashSet<>();
+		SocialNetwork mockSocialNetworkFacebook = new MockSocialNetwork(posts, "Facebook");
         Set<SocialNetwork> socialNetworks = new HashSet<>();
         socialNetworks.add(mockSocialNetworkFacebook);
-        mascotApp = new MascotApp(new MascotAppCore(socialNetworks, new SimpleMatcher()));
+        MascotAppCore core = new MascotAppCore(
+            	socialNetworks, 
+            	new ContentPostMatcher(), 
+            	new ContentPostFilter(), 
+            	new ContentPostFilter(),
+            	new ContentPostFilter()
+            );
+        mascotApp = new MascotApp(core);
         dummyObserver = new DummyObserver();
         mascotApp.addObserver(dummyObserver);
 	}
@@ -66,8 +73,8 @@ public class UserStory4 {
 		assertTrue(dummyObserver.getMatches().isEmpty());
 		Post lostPost = new Post("perdi mi perro labrador", "https://www.facebook.com/posts/1654397464");
 		Post foundPost = new Post("se encontró un perro labrador", "https://www.facebook.com/posts/161893467");
-		lostsPosts.add(lostPost);
-		foundPosts.add(foundPost);
+		posts.add(lostPost);
+		posts.add(foundPost);
 		mascotApp.getMatches();
 		assertFalse(dummyObserver.getMatches().isEmpty());
 	}

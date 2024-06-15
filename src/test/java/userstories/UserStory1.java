@@ -12,6 +12,8 @@ import com.mascotapp.core.MascotApp;
 import com.mascotapp.core.MascotAppCore;
 import com.mascotapp.core.entities.Match;
 import com.mascotapp.core.entities.Post;
+import com.mascotapp.core.filter.ContentPostFilter;
+import com.mascotapp.core.service.matcher.ContentPostMatcher;
 import com.mascotapp.core.service.matcher.SimpleMatcher;
 import com.mascotapp.core.service.socialNetwork.MockSocialNetwork;
 import com.mascotapp.core.service.socialNetwork.SocialNetwork;
@@ -61,11 +63,34 @@ public class UserStory1 {
         
 	}
 	
-	private void setUpMascotApp(Set<Post> foundPets, Set<Post> lostPets) {
-		SocialNetwork mockSocialNetwork = new MockSocialNetwork(foundPets, lostPets, "Mock");
+	private void setUpMascotApp(Set<Post> founds, Set<Post> losts) {
+		Set<Post> allPosts = new HashSet<>();
+		allPosts.addAll(founds);
+		allPosts.addAll(losts);
+		
+		SocialNetwork mockSocialNetwork = new MockSocialNetwork(allPosts, "Mock");
         Set<SocialNetwork> socialNetworks = new HashSet<>();
         socialNetworks.add(mockSocialNetwork);
-        mascotApp = new MascotApp(new MascotAppCore(socialNetworks, new SimpleMatcher()));
+        
+        Set<String> keywordsFound =  new HashSet<>();
+        keywordsFound.add("vi");
+        keywordsFound.add("encontre");
+        keywordsFound.add("encontró");
+        
+        Set<String> keywordsLost =  new HashSet<>();
+        keywordsLost.add("perdí");
+        keywordsLost.add("buscando");
+        keywordsLost.add("perdio");
+        keywordsLost.add("escapó");
+        
+        MascotAppCore core = new MascotAppCore(
+        	socialNetworks, 
+        	new ContentPostMatcher(), 
+        	new ContentPostFilter(), 
+        	new ContentPostFilter(keywordsFound),
+        	new ContentPostFilter(keywordsLost)
+        );
+        mascotApp = new MascotApp(core);
 	}
 
 	@Test

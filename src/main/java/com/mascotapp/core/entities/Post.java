@@ -1,5 +1,7 @@
 package com.mascotapp.core.entities;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Objects;
 
 public class Post {
@@ -34,6 +36,21 @@ public class Post {
 
 	public String getUrl() {
 		return url;
+	}
+	
+	public String getDomain(Post post) {
+		String domain = "";
+		String url = post.getUrl();
+        try {
+            URI uri = new URI(url);
+            domain = uri.getHost();
+            if (domain != null && domain.startsWith("www.")) {
+                domain = domain.substring(4);
+            }
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+        return domain;
 	}
 
 	@Override
