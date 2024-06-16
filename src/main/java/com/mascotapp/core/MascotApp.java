@@ -27,6 +27,7 @@ public class MascotApp extends Observable {
 
     public MascotApp(MascotAppCore core) {
     	this.core = core;
+    	this.core.setMascotApp(this);
     	this.scheduler = Executors.newScheduledThreadPool(1);
         this.fetchMatches = () -> {
             try {
@@ -41,14 +42,18 @@ public class MascotApp extends Observable {
 	}
 
 	public Set<Match> getMatches() {
-		Set<Match> results = new HashSet<>();
-    	results.addAll(this.core.getMatches());
+		Set<Match> matches = new HashSet<>();
+    	matches.addAll(this.core.getMatches());
         
-        setChanged();
-        notifyObservers(results);
+    	notifyMatches(matches);
         
-        return results;
+        return matches;
     }
+	
+	void notifyMatches(Set<Match> matches) {
+		setChanged();
+        notifyObservers(matches);
+	}
 	
 	public Set<SocialNetworkInfo> getSocialNetworks() {
     	return this.core.getSocialNetworks();

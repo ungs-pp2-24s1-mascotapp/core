@@ -3,23 +3,23 @@ package com.mascotapp.core.entities;
 import java.util.Objects;
 
 public class Match {
-	private Post foundPet;
-	private Post lostPet;
+	private Post foundPost;
+	private Post lostPost;
 	
-	public Match(Post foundPet, Post lostPet) {
-		this.foundPet = foundPet;
-		this.lostPet = lostPet;
+	public Match(Post foundPost, Post lostPost) {
+		this.foundPost = foundPost;
+		this.lostPost = lostPost;
 	}
-	public Post getFoundPet() {
-		return foundPet;
+	public Post getFoundPost() {
+		return foundPost;
 	}
-	public Post getLostPet() {
-		return lostPet;
+	public Post getLostPost() {
+		return lostPost;
 	}
 	
 	@Override
 	public int hashCode() {
-		return Objects.hash(foundPet, lostPet);
+		return Objects.hash(foundPost, lostPost);
 	}
 	@Override
 	public boolean equals(Object obj) {
@@ -30,15 +30,11 @@ public class Match {
 		if (getClass() != obj.getClass())
 			return false;
 		Match other = (Match) obj;
-		return Objects.equals(foundPet, other.foundPet) && Objects.equals(lostPet, other.lostPet);
+		return Objects.equals(foundPost, other.foundPost) && Objects.equals(lostPost, other.lostPost);
 	}
 	
 	@Override
 	public String toString() {
-		return "Match [foundPet=" + foundPet + ", lostPet=" + lostPet + "]";
+		return "Match [foundPost=" + foundPost + ", lostPost=" + lostPost + "]";
 	}
-	
-	
-	
-	
 }

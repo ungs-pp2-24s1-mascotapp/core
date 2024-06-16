@@ -44,7 +44,7 @@ public class ContentPostMatcher implements PostMatcher {
             	if (!hasEnoughCharacters(lostWord))
             		continue;
             	
-                if (foundWord.equals(lostWord)) {
+                if (foundWord.equalsIgnoreCase(lostWord)) {
                     matchingWordsCount++;
                     if (matchingWordsCount >= minimumNumberWordMatches) {
                         return true;

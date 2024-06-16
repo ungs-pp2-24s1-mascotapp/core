@@ -11,6 +11,9 @@ public abstract class SocialNetwork extends Observable{
 	public abstract String getName();
 	public abstract Set<Post> getPosts();
 	public void notifyNewPosts(Set<Post> posts) {
+		for (Post post : posts) {
+			post.setSource(getName());
+		}
 		setChanged();
         notifyObservers(new Notification<Set<Post>>(posts, getName()));
 	}

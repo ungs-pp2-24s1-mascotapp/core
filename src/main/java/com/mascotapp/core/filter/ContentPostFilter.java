@@ -8,7 +8,7 @@ import com.mascotapp.core.entities.Post;
 public class ContentPostFilter implements PostFilter {
 	
 	private Set<String> keywords;
-	private int minimumKeywordsToFound = 2;
+	private int minimumKeywordsToFound = 1;
 	
 	public ContentPostFilter() {
 		keywords = new HashSet<String>();

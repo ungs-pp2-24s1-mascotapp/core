@@ -14,7 +14,6 @@ import com.mascotapp.core.MascotApp;
 import com.mascotapp.core.MascotAppCore;
 import com.mascotapp.core.filter.ContentPostFilter;
 import com.mascotapp.core.service.matcher.ContentPostMatcher;
-import com.mascotapp.core.service.matcher.SimpleMatcher;
 import com.mascotapp.core.service.socialNetwork.MockSocialNetwork;
 import com.mascotapp.core.service.socialNetwork.SocialNetwork;
 import com.mascotapp.core.service.socialNetwork.SocialNetworkInfo;

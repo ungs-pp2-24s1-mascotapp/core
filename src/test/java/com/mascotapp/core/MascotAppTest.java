@@ -4,7 +4,6 @@ import com.mascotapp.core.entities.Match;
 import com.mascotapp.core.entities.Post;
 import com.mascotapp.core.filter.ContentPostFilter;
 import com.mascotapp.core.service.matcher.ContentPostMatcher;
-import com.mascotapp.core.service.matcher.SimpleMatcher;
 import com.mascotapp.core.service.socialNetwork.MockSocialNetwork;
 import com.mascotapp.core.service.socialNetwork.SocialNetwork;
 

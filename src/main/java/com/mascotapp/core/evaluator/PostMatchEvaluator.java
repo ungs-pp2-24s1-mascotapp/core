@@ -7,7 +7,7 @@ import com.mascotapp.core.entities.Match;
 import com.mascotapp.core.entities.Post;
 import com.mascotapp.core.service.matcher.Matcher;
 
-public class PostMatchEvaluator {
+public class PostMatchEvaluator implements MatchEvaluator {
 	
 	private Matcher<Post> matcher;
 	

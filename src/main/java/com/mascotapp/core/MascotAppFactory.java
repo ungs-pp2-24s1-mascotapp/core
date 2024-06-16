@@ -7,7 +7,6 @@ import java.util.Set;
 import com.mascotapp.core.discoverer.Discoverer;
 import com.mascotapp.core.filter.ContentPostFilter;
 import com.mascotapp.core.service.matcher.ContentPostMatcher;
-import com.mascotapp.core.service.matcher.SimpleMatcher;
 import com.mascotapp.core.service.socialNetwork.SocialNetwork;
 
 public class MascotAppFactory {
@@ -20,7 +19,7 @@ public class MascotAppFactory {
         keywordsFound.add("encontró");
         
         Set<String> keywordsLost =  new HashSet<>();
-        keywordsLost.add("perdí");
+        keywordsLost.add("perdi");
         keywordsLost.add("buscando");
         keywordsLost.add("perdio");
         keywordsLost.add("escapó");

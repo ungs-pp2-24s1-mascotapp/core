@@ -15,7 +15,6 @@ import com.mascotapp.core.entities.Match;
 import com.mascotapp.core.entities.Post;
 import com.mascotapp.core.filter.ContentPostFilter;
 import com.mascotapp.core.service.matcher.ContentPostMatcher;
-import com.mascotapp.core.service.matcher.SimpleMatcher;
 import com.mascotapp.core.service.socialNetwork.MockSocialNetwork;
 import com.mascotapp.core.service.socialNetwork.SocialNetwork;
 
@@ -26,6 +25,7 @@ public class UserStory4 {
 	private MascotApp mascotApp;
 	private Set<Post> posts;
 	private DummyObserver dummyObserver;
+	private SocialNetwork mockSocialNetworkFacebook;
 	
 	// Implementación dummy de Observer
     private class DummyObserver implements Observer {
@@ -53,7 +53,7 @@ public class UserStory4 {
 	
 	private void setUpMascotApp() {
 		posts = new HashSet<>();
-		SocialNetwork mockSocialNetworkFacebook = new MockSocialNetwork(posts, "Facebook");
+		mockSocialNetworkFacebook = new MockSocialNetwork(posts, "Facebook");
         Set<SocialNetwork> socialNetworks = new HashSet<>();
         socialNetworks.add(mockSocialNetworkFacebook);
         MascotAppCore core = new MascotAppCore(
@@ -73,16 +73,22 @@ public class UserStory4 {
 		assertTrue(dummyObserver.getMatches().isEmpty());
 		Post lostPost = new Post("perdi mi perro labrador", "https://www.facebook.com/posts/1654397464");
 		Post foundPost = new Post("se encontró un perro labrador", "https://www.facebook.com/posts/161893467");
-		posts.add(lostPost);
-		posts.add(foundPost);
-		mascotApp.getMatches();
+		Set<Post> newPosts = new HashSet<>();
+		newPosts.add(lostPost);
+		newPosts.add(foundPost);
+		mockSocialNetworkFacebook.notifyNewPosts(newPosts);
 		assertFalse(dummyObserver.getMatches().isEmpty());
 	}
 	
 	@Test
 	public void CA_2_No_Hay_Nuevos_Matchs() {
 		assertTrue(dummyObserver.getMatches().isEmpty());
-		mascotApp.getMatches();
+		Post lostPost = new Post("perdi mi collar", "https://www.facebook.com/posts/1654397464");
+		Post foundPost = new Post("encontre mi collar", "https://www.facebook.com/posts/161893467");
+		Set<Post> newPosts = new HashSet<>();
+		newPosts.add(lostPost);
+		newPosts.add(foundPost);
+		mockSocialNetworkFacebook.notifyNewPosts(newPosts);
 		assertTrue(dummyObserver.getMatches().isEmpty());
 	}
 }

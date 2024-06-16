@@ -7,10 +7,17 @@ import java.util.Objects;
 public class Post {
 	private String content;
 	private String url;
+	private String source;
 	
 	public Post(String content, String url) {
 		this.content = content;
 		this.url = url;
+	}
+	
+	public Post(String content, String url, String source) {
+		this.content = content;
+		this.url = url;
+		this.setSource(source);
 	}
 
 	@Override
@@ -38,9 +45,9 @@ public class Post {
 		return url;
 	}
 	
-	public String getDomain(Post post) {
+	public String getDomain() {
 		String domain = "";
-		String url = post.getUrl();
+		String url = this.getUrl();
         try {
             URI uri = new URI(url);
             domain = uri.getHost();
@@ -51,6 +58,14 @@ public class Post {
             e.printStackTrace();
         }
         return domain;
+	}
+	
+	public String getSource() {
+		return source;
+	}
+	
+	public void setSource(String source) {
+		this.source = source;
 	}
 
 	@Override
