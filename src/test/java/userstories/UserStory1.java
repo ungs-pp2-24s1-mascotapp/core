@@ -12,7 +12,9 @@ import com.mascotapp.core.MascotApp;
 import com.mascotapp.core.MascotAppCore;
 import com.mascotapp.core.entities.Match;
 import com.mascotapp.core.entities.Post;
-import com.mascotapp.core.filter.ContentPostFilter;
+import com.mascotapp.core.filter.ContentFoundPostFilter;
+import com.mascotapp.core.filter.ContentLostPostFilter;
+import com.mascotapp.core.filter.ContentPetPostFilter;
 import com.mascotapp.core.service.matcher.ContentPostMatcher;
 import com.mascotapp.core.service.socialNetwork.MockSocialNetwork;
 import com.mascotapp.core.service.socialNetwork.SocialNetwork;
@@ -71,23 +73,12 @@ public class UserStory1 {
         Set<SocialNetwork> socialNetworks = new HashSet<>();
         socialNetworks.add(mockSocialNetwork);
         
-        Set<String> keywordsFound =  new HashSet<>();
-        keywordsFound.add("vi");
-        keywordsFound.add("encontre");
-        keywordsFound.add("encontró");
-        
-        Set<String> keywordsLost =  new HashSet<>();
-        keywordsLost.add("perdi");
-        keywordsLost.add("buscando");
-        keywordsLost.add("perdio");
-        keywordsLost.add("escapó");
-        
         MascotAppCore core = new MascotAppCore(
         	socialNetworks, 
         	new ContentPostMatcher(), 
-        	new ContentPostFilter(), 
-        	new ContentPostFilter(keywordsFound),
-        	new ContentPostFilter(keywordsLost)
+        	new ContentPetPostFilter(), 
+        	new ContentFoundPostFilter(),
+        	new ContentLostPostFilter()
         );
         mascotApp = new MascotApp(core);
 	}

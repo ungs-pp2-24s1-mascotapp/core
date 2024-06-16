@@ -16,19 +16,21 @@ import com.mascotapp.core.service.socialNetwork.SocialNetwork;
 import com.mascotapp.core.service.socialNetwork.SocialNetworkInfo;
 import com.mascotapp.core.service.socialNetwork.SocialNetworkSelector;
 
+@SuppressWarnings("deprecation")
 public class MascotAppCore implements Observer {
 	private SocialNetworkSelector socialNetworkSelector;
 	private Set<SocialNetwork> socialNetworks;
-	private Filter filterPosts;
-	private Filter filterFounds;
-	private Filter filterLosts;
+	private Filter<Post> filterPosts;
+	private Filter<Post> filterFounds;
+	private Filter<Post> filterLosts;
 	private MatchEvaluator evaluator;
 	private Set<Post> foundPosts;
 	private Set<Post> lostPosts;
 	private Set<Match> matches;
 	private MascotApp mascotApp;
     
-    public MascotAppCore(Set<SocialNetwork> socialNetworks, Matcher matcher, Filter filterPosts, Filter filterFounds, Filter filterLosts) {
+    public MascotAppCore(Set<SocialNetwork> socialNetworks, Matcher<Post> matcher, 
+    		Filter<Post> filterPosts, Filter<Post> filterFounds, Filter<Post> filterLosts) {
     	this.evaluator = new PostMatchEvaluator(matcher);
     	
     	this.filterPosts = filterPosts;
@@ -88,6 +90,7 @@ public class MascotAppCore implements Observer {
 	@Override
 	public void update(Observable o, Object arg) {
 		if (arg instanceof Notification) {
+			@SuppressWarnings("unchecked")
 			Notification<Set<Post>> notification = (Notification<Set<Post>>) arg;
             String socialNetworkName = notification.getObservableName();
             

@@ -2,7 +2,6 @@ package com.mascotapp.core.discoverer;
 
 import org.junit.jupiter.api.Test;
 
-import com.mascotapp.core.discoverer.Discoverer;
 import com.mascotapp.core.service.socialNetwork.SocialNetwork;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
