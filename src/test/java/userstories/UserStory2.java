@@ -42,7 +42,7 @@ public class UserStory2 {
         assertTrue(socialNetworksDiscovery.isEmpty());
     }
 	
-	/*
+	/*\
 	@Test
     public void CA5_unica_red_social() throws FileNotFoundException, IllegalArgumentException {
 		String singleSocialNetworkPath = "src/test/resources/US2/singleSocialNetwork/Facebook.jar";

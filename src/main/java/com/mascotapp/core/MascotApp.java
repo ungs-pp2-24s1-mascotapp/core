@@ -1,6 +1,7 @@
 package com.mascotapp.core;
 
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Observable;
 import java.util.Set;
 import java.util.concurrent.Executors;
@@ -9,6 +10,7 @@ import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
 import com.mascotapp.core.entities.Match;
+import com.mascotapp.core.service.socialNetwork.SocialNetwork;
 import com.mascotapp.core.service.socialNetwork.SocialNetworkInfo;
 
 @SuppressWarnings("deprecation")
@@ -53,6 +55,10 @@ public class MascotApp extends Observable {
 	void notifyMatches(Set<Match> matches) {
 		setChanged();
         notifyObservers(matches);
+	}
+	
+	public Map<SocialNetwork, Boolean> getSocialNetworkStates() {
+		return this.core.getSocialNetworkStates();
 	}
 	
 	public Set<SocialNetworkInfo> getSocialNetworks() {

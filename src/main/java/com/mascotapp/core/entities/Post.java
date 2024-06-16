@@ -57,6 +57,9 @@ public class Post {
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
+        if (domain == null || domain == "") {
+        	domain = url.replaceFirst("^www.*?\\.", "");
+        }
         return domain;
 	}
 	
@@ -70,7 +73,7 @@ public class Post {
 
 	@Override
 	public String toString() {
-		return "Post [content=" + content + ", url=" + url + "]";
+		return "Post [content=" + content + ", url=" + url + ", source=" + source + "]";
 	}
 	
 	
