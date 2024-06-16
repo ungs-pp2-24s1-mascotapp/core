@@ -41,6 +41,19 @@ public class SocialNetworkSelector {
     	changeStatusSocialNetwork(name, false);
     }
     
+    public boolean isSocialNetworkActive(String name) {
+		for (SocialNetwork socialNetwork : this.getActiveSocialNetworks()) {
+			if(socialNetwork.getName().equals(name)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public Map<SocialNetwork, Boolean> getSocialNetworkStates() {
+		return this.socialNetworkStates;
+	}
+    
     private void changeStatusSocialNetwork(String name, boolean value) throws IllegalArgumentException {
     	for (SocialNetwork socialNetwork : socialNetworks) {
             if (socialNetwork.getName().equals(name)) {

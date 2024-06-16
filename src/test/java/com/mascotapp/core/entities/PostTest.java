@@ -16,6 +16,27 @@ public class PostTest {
         Post post = new Post("Hello, world!", "https://example.com");
         assertEquals("https://example.com", post.getUrl());
     }
+    
+    @Test
+    void testGetSource() {
+        Post post = new Post("Hello, world!", "https://example.com", "Example");
+        assertEquals("Example", post.getSource());
+        Post post2 = new Post("Hello, world!", "https://example.com");
+        post2.setSource("Example2");
+        assertEquals("Example2", post2.getSource());
+    }
+    
+    @Test
+    void testGetDomain() {
+        Post post = new Post("Hello, world!", "https://example.com", "Example");
+        assertEquals("example.com", post.getDomain());
+        
+        Post post2 = new Post("Hello, world!", "https://www.example.com", "Example");
+        assertEquals("example.com", post2.getDomain());
+        
+        Post post3 = new Post("Hello, world!", "www.example.com", "Example");
+        assertEquals("example.com", post3.getDomain());
+    }
 
     @Test
     void testEquals() {

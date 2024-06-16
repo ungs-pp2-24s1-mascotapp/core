@@ -4,31 +4,24 @@ import java.util.Set;
 
 import com.mascotapp.core.entities.Post;
 
-public class MockSocialNetwork implements SocialNetwork {
+public class MockSocialNetwork extends SocialNetwork {
 	
-	private Set<Post> foundPets;
-	private Set<Post> lostPets;
+	private Set<Post> posts;
 	private String name;
 	
-	public MockSocialNetwork(Set<Post> foundPets, Set<Post> lostPets, String name) {
-		this.foundPets = foundPets;
-		this.lostPets = lostPets;
+	public MockSocialNetwork(Set<Post> posts, String name) {
+		this.posts = posts;
 		this.name = name;
-	}
-
-	@Override
-	public Set<Post> getLostPets() {
-		return lostPets;
-	}
-
-	@Override
-	public Set<Post> getFoundPets() {
-		return foundPets;
 	}
 
 	@Override
 	public String getName() {
 		return name;
+	}
+
+	@Override
+	public Set<Post> getPosts() {
+		return posts;
 	}
 
 }

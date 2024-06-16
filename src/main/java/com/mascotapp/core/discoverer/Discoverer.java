@@ -1,4 +1,4 @@
-package com.mascotapp.core.discovery;
+package com.mascotapp.core.discoverer;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -16,7 +16,7 @@ import java.util.jar.JarFile;
 import com.mascotapp.core.logger.Logger;
 import com.mascotapp.core.service.socialNetwork.SocialNetwork;
 
-public class MascotAppDiscovery {
+public class Discoverer {
 
 	private static final String CLASS_EXTENSION = ".class";
 	private static final String JAR_EXTENSION = ".jar";
