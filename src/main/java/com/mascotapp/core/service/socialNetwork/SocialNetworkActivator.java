@@ -5,11 +5,11 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-public class SocialNetworkSelector {
+public class SocialNetworkActivator {
 	private Set<SocialNetwork> socialNetworks;
 	private Map<SocialNetwork, Boolean> socialNetworkStates;
 	
-	public SocialNetworkSelector(Set<SocialNetwork> socialNetworks) {
+	public SocialNetworkActivator(Set<SocialNetwork> socialNetworks) {
         this.socialNetworks = socialNetworks;
         this.initialize();
     }

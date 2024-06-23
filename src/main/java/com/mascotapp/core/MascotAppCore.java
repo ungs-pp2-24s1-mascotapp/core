@@ -13,11 +13,11 @@ import com.mascotapp.core.service.matcher.Matcher;
 import com.mascotapp.core.service.socialNetwork.SocialNetwork;
 import com.mascotapp.core.service.socialNetwork.SocialNetworkInfo;
 import com.mascotapp.core.service.socialNetwork.SocialNetworkListener;
-import com.mascotapp.core.service.socialNetwork.SocialNetworkSelector;
+import com.mascotapp.core.service.socialNetwork.SocialNetworkActivator;
 import com.mascotapp.core.service.updater.PostUpdater;
 
 public class MascotAppCore {
-	private SocialNetworkSelector socialNetworkSelector;
+	private SocialNetworkActivator socialNetworkActivator;
 	private PostUpdater postUpdater;
 	private MatchEvaluator evaluator;
 	private Set<Match> matches;
@@ -29,14 +29,14 @@ public class MascotAppCore {
     	
     	this.postUpdater = new PostUpdater(filterPosts, filterFounds, filterLosts);
     	
-    	this.socialNetworkSelector = new SocialNetworkSelector(socialNetworks);
+    	this.socialNetworkActivator = new SocialNetworkActivator(socialNetworks);
     	
         this.matches = new HashSet<>();
         
         this.initializePosts();
         this.updateAndNotifyMatches();
         
-        new SocialNetworkListener(socialNetworks, socialNetworkSelector, postUpdater, this);
+        new SocialNetworkListener(socialNetworks, socialNetworkActivator, postUpdater, this);
     }
     
     public Set<Match> getMatches() {
@@ -45,8 +45,8 @@ public class MascotAppCore {
     		String foundSource = match.getFoundPost().getSource();
     		String lostSource = match.getLostPost().getSource();
     		
-			if(socialNetworkSelector.isSocialNetworkActive(foundSource) && 
-				socialNetworkSelector.isSocialNetworkActive(lostSource)) {
+			if(socialNetworkActivator.isSocialNetworkActive(foundSource) && 
+				socialNetworkActivator.isSocialNetworkActive(lostSource)) {
 				results.add(match);
 			}
 		}
@@ -54,20 +54,20 @@ public class MascotAppCore {
     }
     
     public Set<SocialNetworkInfo> getSocialNetworks() {
-    	return this.socialNetworkSelector.getSocialNetworks();
+    	return this.socialNetworkActivator.getSocialNetworks();
     }
     
     public Map<SocialNetwork, Boolean> getSocialNetworkStates() {
-    	return this.socialNetworkSelector.getSocialNetworkStates();
+    	return this.socialNetworkActivator.getSocialNetworkStates();
     }
     
     public void activateSocialNetwork(String name) {
-    	this.socialNetworkSelector.activateSocialNetwork(name);
+    	this.socialNetworkActivator.activateSocialNetwork(name);
     	this.notifyMatches();
     }
     
     public void deactivateSocialNetwork(String name) {
-    	this.socialNetworkSelector.deactivateSocialNetwork(name);
+    	this.socialNetworkActivator.deactivateSocialNetwork(name);
     	this.notifyMatches();
     }
     
@@ -76,7 +76,7 @@ public class MascotAppCore {
     }
 	
 	private void initializePosts() {
-		for (SocialNetwork socialNetwork : socialNetworkSelector.getActiveSocialNetworks()) {
+		for (SocialNetwork socialNetwork : socialNetworkActivator.getActiveSocialNetworks()) {
         	Set<Post> posts = socialNetwork.getPosts();
         	postUpdater.updatePosts(posts, socialNetwork.getName());
         }
