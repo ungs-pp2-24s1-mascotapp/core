@@ -7,6 +7,8 @@ import java.util.Set;
 
 import org.junit.jupiter.api.Test;
 
+import com.mascotapp.core.MascotApp;
+import com.mascotapp.core.MascotAppFactory;
 import com.mascotapp.core.discoverer.Discoverer;
 import com.mascotapp.core.service.socialNetwork.SocialNetwork;
 
@@ -51,7 +53,10 @@ public class UserStory2 {
         
         for (SocialNetwork elemento : socialNetworksDiscovery) {
         	assertTrue(elemento.getName().equals("Facebook"));
-        }        	
+        }
+        
+        MascotApp app = MascotAppFactory.create(singleSocialNetworkPath);
+        app.getMatches();
     }
     
 
@@ -65,6 +70,9 @@ public class UserStory2 {
         for (SocialNetwork elemento : socialNetworksDiscovery) {
         	assertTrue(elemento.getName().equals("Facebook") ||
         			elemento.getName().equals("Instagram")); 
-        }   	
+        }
+        
+        MascotApp app = MascotAppFactory.create(multipleSocialNetworksPath);
+        app.getMatches();
     }
 }
